@@ -30,3 +30,51 @@
 - **What was done**: Generated SSH deploy key for bernard user. Added to GitHub as deploy key. Configured SSH over port 443 (github.com → ssh.github.com:443) to work with egress firewall. Cloned repo at ~/bernard/ on server. Created symlinks: ~/.openclaw/workspace → repo, ~/.openclaw/openclaw.json → repo. Created deploy.sh and remote-deploy.sh. Tested full push → pull → restart → health check cycle. SSH direct as bernard (not sudo).
 - **Files modified**: `infra/deploy.sh`, `infra/remote-deploy.sh`, `CLAUDE.md`, server: `~/.ssh/config`, `~/.ssh/id_ed25519*`, `~/.openclaw/workspace` (symlink), `~/.openclaw/openclaw.json` (symlink)
 - **Issues**: Initial deploy.sh had insufficient health check timeout (fixed). sudo -u bernard lacks DBUS session bus for systemctl --user (resolved by SSHing directly as bernard).
+
+### Task 1.3: Fix openclaw.json Structure + Disable Voice
+- **Status**: ✅ DONE
+- **Started**: 2026-03-28T16:15:00+08:00
+- **Completed**: 2026-03-28T16:20:00+08:00
+- **What was done**: Duplicate `tools` key already fixed in prep commit (merged web + media into single block). TTS disabled: `tts.auto` set to `"off"`, ElevenLabs config removed. Voice stays off until readiness gate (2 weeks useful text digests).
+- **Files modified**: `openclaw/openclaw.json`
+- **Issues**: None
+
+### Task 1.4: Configure Model Routing Tiers
+- **Status**: ✅ DONE
+- **Started**: 2026-03-28T16:20:00+08:00
+- **Completed**: 2026-03-28T16:25:00+08:00
+- **What was done**: Primary: Claude Sonnet 4. Heartbeat: Claude Haiku 4. Subagents: Claude Haiku 4. Added Haiku and DeepSeek v3 to model aliases. Fallback chain (Sonnet → DeepSeek) documented in AGENTS.md — `agents.defaults.fallback` not supported by OpenClaw schema.
+- **Files modified**: `openclaw/openclaw.json`
+- **Issues**: `fallback`, `heartbeat.interval`, `compaction.flushPrompt` all rejected by OpenClaw v2026.3.24 strict schema. Removed invalid keys to restore gateway. Fallback and flush prompt handled via workspace instructions instead.
+
+### Task 1.5: Set Token Budget Cap
+- **Status**: ✅ DONE (documented gap)
+- **Started**: 2026-03-28T16:25:00+08:00
+- **Completed**: 2026-03-28T16:26:00+08:00
+- **What was done**: OpenClaw has no native token/spend budget config. Cost control relies on: (1) OpenRouter spend limit at openrouter.ai, (2) Haiku for heartbeat + subagents, (3) AGENTS.md cost awareness rules.
+- **Files modified**: None
+- **Issues**: No native budget support — acceptable, OpenRouter limit is the control.
+
+### Task 1.7: Initialize Vault Directory Structure
+- **Status**: ✅ DONE
+- **Started**: 2026-03-28T16:26:00+08:00
+- **Completed**: 2026-03-28T16:28:00+08:00
+- **What was done**: Created knowledge/ (people, projects, priorities, principles, ideas, comms), artifacts/, memory/, learning/ under openclaw/workspace/. Added .gitkeep to all dirs. Created knowledge/README.md with structure docs, ingestion rules, naming conventions.
+- **Files modified**: `openclaw/workspace/knowledge/README.md`, 9x `.gitkeep` files
+- **Issues**: None
+
+### Task 1.8: Update Context Compaction Config
+- **Status**: ⏭️ ADJUSTED
+- **Started**: 2026-03-28T16:28:00+08:00
+- **Completed**: 2026-03-28T16:30:00+08:00
+- **What was done**: `compaction.flushPrompt` is not a recognized OpenClaw config key. Compaction stays at `"mode": "safeguard"` (default). Flush prompt will be implemented via workspace instructions (HEARTBEAT.md or AGENTS.md) in Phase 2 instead.
+- **Files modified**: `openclaw/openclaw.json` (added then removed flushPrompt)
+- **Issues**: OpenClaw schema doesn't support flushPrompt. Deferred to workspace-level instructions.
+
+### Task 1.9: Deploy and Verify
+- **Status**: ✅ DONE
+- **Started**: 2026-03-28T16:30:00+08:00
+- **Completed**: 2026-03-28T16:35:00+08:00
+- **What was done**: Pushed all Phase 1 changes via `bash infra/remote-deploy.sh`. Verified on server: OC v2026.3.24, gateway healthy, TTS off, Sonnet primary, Haiku for heartbeat+subagents, compaction safeguard, all vault dirs present, symlinks active.
+- **Files modified**: None (deploy only)
+- **Issues**: First deploy attempt crashed gateway due to invalid config keys (fallback, heartbeat.interval, flushPrompt). Fixed and redeployed successfully.
