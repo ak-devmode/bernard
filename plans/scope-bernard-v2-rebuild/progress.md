@@ -4,10 +4,14 @@
 <!-- Updated after every significant action. Paste the first 20 lines of this file
      into a new conversation to get oriented. -->
 **Scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Last action:** Phase 6 complete (2026-03-28) — CC dispatch via acpx working, JSONL logging active
-**Next action:** Execute Phase 7 plan (Padma Care Community) — final phase
+**Branch:** bernard-v2
+**Last action:** Phases 1-6 complete (2026-03-28) — single session, all deployed to server
+**Next action:** Execute Phase 7 plan — `plans/scope-bernard-v2-rebuild/bernard-v2-phase-7-PLAN.md`
 **Open blockers:** None
-**Key files changed:** AGENTS.md (dispatch rules), cc-dispatch.sh, env.example
+**Server:** 54.251.203.204, gateway healthy, QMD indexing 24 files, CC dispatch working
+**What's live:** Identity, vault (projects/people/ideas/comms), digest template, 5 skills, ingestion pipeline, PII stripping, CC dispatch via acpx, JSONL logging
+**Human TODOs:** `plans/scope-bernard-v2-rebuild/TODO-alex.md` (priorities, people files, board dates, etc.)
+**Someday list:** `plans/scope-bernard-v2-rebuild/TOMORROW.md`
 
 ---
 
