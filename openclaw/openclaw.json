@@ -45,7 +45,8 @@
       ],
       "workspace": "/home/bernard/.openclaw/workspace",
       "compaction": {
-        "mode": "safeguard"
+        "mode": "safeguard",
+        "flushPrompt": "Distill this session. Keep: decisions made, tasks completed, blockers, open items. Skip: routine exchanges."
       },
       "maxConcurrent": 4,
       "subagents": {
