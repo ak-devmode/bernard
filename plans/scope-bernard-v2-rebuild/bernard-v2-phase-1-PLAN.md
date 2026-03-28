@@ -18,10 +18,10 @@
 
 ### Task 1.1: Check Current OpenClaw Version
 - **Type**: AI (SSH)
-- **Input**: Server at 54.254.76.94, bernard user
+- **Input**: Server at 54.251.203.204, bernard user
 - **Action**:
   ```bash
-  ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94 \
+  ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.251.203.204 \
     "sudo -u bernard bash -c 'openclaw --version 2>/dev/null || echo unknown'"
   ```
   Compare to latest stable. Check if ≥ v2026.2.23 (compaction bug fix threshold).

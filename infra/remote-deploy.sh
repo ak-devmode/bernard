@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-SERVER="54.254.76.94"
+SERVER="54.251.203.204"
 SSH_KEY="$HOME/.ssh/awk_sandbox.pem"
 
 echo "=== Pushing to GitHub ==="

@@ -3,7 +3,7 @@
 **Project:** Bernard (ak-devmode/bernard)  **Branch:** main  **Date:** 2026-03-28
 **Scope folder:** plans/scope-bernard-v2-rebuild/
 **Source repo(s):** /Users/alexknecht/Projects/bernard
-**Server:** 54.254.76.94 (SSH as ubuntu, bernard user, OpenClaw at /home/bernard/.openclaw/)
+**Server:** 54.251.203.204 (SSH as ubuntu, bernard user, OpenClaw at /home/bernard/.openclaw/)
 
 ## Context
 
@@ -48,7 +48,7 @@ GitHub (source of truth)
          │
     ┌────┴────┐
     ▼         ▼
- LOCAL MAC   SERVER (54.254.76.94)
+ LOCAL MAC   SERVER (54.251.203.204)
  ├── repo    ├── repo (~/bernard/)
  ├── .env    ├── .env (production keys, chmod 600)
  └── edit    └── ~/.openclaw/

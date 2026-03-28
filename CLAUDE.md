@@ -1,6 +1,6 @@
 # Bernard
 
-Bernard is Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC2 instance (Ubuntu, 54.254.76.94).
+Bernard is Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC2 instance (Ubuntu, 54.251.203.204).
 
 ## What this repo is
 - **Config & identity layer** for Bernard's OpenClaw instance — not a fork of OpenClaw itself
@@ -17,10 +17,10 @@ Bernard is Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC
 ## Server access
 ```bash
 # Direct as bernard (preferred — for OpenClaw, deploy, git):
-ssh -i ~/.ssh/awk_sandbox.pem bernard@54.254.76.94
+ssh -i ~/.ssh/awk_sandbox.pem bernard@54.251.203.204
 
 # As ubuntu (only when sudo needed — firewall, system packages, etc.):
-ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94
+ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.251.203.204
 ```
 Bernard runs as the `bernard` user. OpenClaw data lives at `/home/bernard/.openclaw/`.
 The `bernard` user does NOT have sudo (intentional, never grant it).
@@ -34,7 +34,7 @@ bash infra/remote-deploy.sh
 
 # Or manually:
 git push origin bernard-v2
-ssh -i ~/.ssh/awk_sandbox.pem bernard@54.254.76.94 "bash ~/bernard/infra/deploy.sh"
+ssh -i ~/.ssh/awk_sandbox.pem bernard@54.251.203.204 "bash ~/bernard/infra/deploy.sh"
 ```
 
 Server repo: `~/bernard/` (cloned from GitHub)

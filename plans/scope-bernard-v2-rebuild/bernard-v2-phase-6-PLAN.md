@@ -22,7 +22,7 @@
 - **Input**: Server access, Node.js already installed
 - **Action**:
   ```bash
-  ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94
+  ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.251.203.204
   # As bernard user:
   sudo -u bernard bash -c 'npm install -g @anthropic-ai/claude-code'
   # Verify:
