@@ -17,5 +17,14 @@
 - **What was done**: Created voice.md with 5 voice principles, tone guidelines, and 4 response type examples (direct answer, triage guidance, soft referral, pass/flag for human). Each example uses Bali-specific context.
 - **Files modified**: openclaw/workspace/knowledge/padma-care/voice.md (created)
 - **Issues**: None
-- **⏸️ HUMAN_REVIEW**: Alex to confirm voice feels right — authoritative but warm, clear about scope
+- **⏸️ HUMAN_REVIEW**: Approved — "this is fine"
+
+### Task 7.2: Document Free/Paid Line
+- **Status**: ✅ DONE — awaiting HUMAN_REVIEW
+- **Started**: 2026-03-28
+- **Completed**: 2026-03-28
+- **What was done**: Created free-paid-line.md with competitive moat framing, free tier (community responses), two paid tiers (advocacy + concierge), transition phrase with rules. Each tier has a "signal" heuristic for Bernard to classify.
+- **Files modified**: openclaw/workspace/knowledge/padma-care/free-paid-line.md (created)
+- **Issues**: None
+- **⏸️ HUMAN_REVIEW**: Alex to confirm line is clear, defensible, and non-apologetic
 
