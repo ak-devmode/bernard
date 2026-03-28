@@ -55,16 +55,56 @@ See `knowledge/people/` directory. Alex will populate with key contacts across P
 
 ## Ingestion Criteria
 
-<!-- Phase 5 will populate these sections -->
+Rules for what gets ingested into the vault. Bernard follows these programmatically via `tools/ingest.py`.
 
 ### Email
-<!-- Criteria for which emails get ingested and summarized -->
-<!-- e.g., from:@kalpa.co, from:@padmacare.com, subject contains "urgent" -->
+
+**Include:**
+- Emails from known contacts (see `knowledge/people/`)
+- Emails mentioning PMG, Kalpa, WellMed, Narawangsa, or Padma Care
+- Emails with action items, deadlines, or decisions
+- Emails from domains Alex specifies (Alex to add: @kalpa.co, @padmacare.com, etc.)
+
+**Exclude:**
+- Newsletters and marketing emails
+- Automated notifications (CI/CD, billing confirmations, shipping updates)
+- Spam and bulk mail
+- Personal family emails (unless Alex explicitly routes them)
+
+**PII strip before writing:**
+- Email addresses → `[EMAIL]`
+- Phone numbers (Indonesian + international) → `[PHONE]`
+- ID numbers (KTP, passport, BPJS) → `[ID_NUMBER]`
+- Financial details beyond category → `[FINANCIAL]`
+
+**Summary format:** sender (role, not name), topic, action items, deadline if any, sentiment.
 
 ### WhatsApp
-<!-- Criteria for which WA messages get ingested -->
-<!-- e.g., specific group IDs, direct messages from key contacts -->
+
+**Include:**
+- Business-related threads from approved contacts or groups
+- Messages with action items or decisions
+- Threads Alex explicitly forwards to Bernard
+
+**Exclude:**
+- Personal conversations and family groups
+- Group noise (reactions, stickers, forwards without context)
+- Memes and media-only messages
+
+**PII strip:** same rules as email.
+
+**Summary format:** participants (roles only, not names in vault), topic, outcome, follow-up needed.
 
 ### Chatwoot
-<!-- Criteria for which Chatwoot conversations get flagged -->
-<!-- e.g., sentiment negative, topic medical, unresolved > 24h -->
+
+**Include:**
+- Conversations with negative sentiment or complaints
+- Unresolved conversations older than 24 hours
+- Medical-topic conversations (Padma Care)
+- Conversations Alex is tagged in
+
+**Exclude:**
+- Resolved positive interactions
+- Automated bot responses with no human follow-up
+
+**Summary format:** topic, customer sentiment, resolution status, follow-up needed.
