@@ -78,3 +78,15 @@
 - **What was done**: Pushed all Phase 1 changes via `bash infra/remote-deploy.sh`. Verified on server: OC v2026.3.24, gateway healthy, TTS off, Sonnet primary, Haiku for heartbeat+subagents, compaction safeguard, all vault dirs present, symlinks active.
 - **Files modified**: None (deploy only)
 - **Issues**: First deploy attempt crashed gateway due to invalid config keys (fallback, heartbeat.interval, flushPrompt). Fixed and redeployed successfully.
+
+## Session: 2026-03-28T21:00:00+08:00
+
+### Post-Phase-1: Infra fixes
+- **VM crash recovery**: Instance crashed during heartbeat config exploration. Force-stopped, restarted. IP changed (was not EIP).
+- **Elastic IP**: Associated orphaned EIP `54.251.203.204` to Bernard instance. Tagged as "Bernard-EIP". Updated all repo IP references. Tagged all 8 EIPs across the account for clarity.
+- **Heartbeat interval**: Discovered correct config key is `heartbeat.every` (not `interval`). Source: `heartbeat-summary-DvQBtBZ6.js`. Default was `30m`, set to `3h`. Verified in logs — no schema errors, heartbeat running clean.
+- **DNS**: Alex updated `bernard.finengine.co` to point to new EIP.
+- **OpenClaw config schema lessons**: Valid heartbeat keys: `every`, `model`, `prompt`, `target`, `ackMaxChars`, `activeHours`. Duration format: `parseDurationMs()` with default unit minutes (e.g., "3h", "30m", "1d").
+
+### Phase 1: COMPLETE
+All tasks done. Gateway healthy. Ready for Phase 2.
