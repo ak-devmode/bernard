@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.2.21-2",
+    "lastTouchedAt": "2026-02-22T10:47:32.477Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-22T10:47:32.441Z",
+    "lastRunVersion": "2026.2.21-2",
+    "lastRunCommand": "configure",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "openrouter:default": {
+        "provider": "openrouter",
+        "mode": "api_key"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/auto"
+      },
+      "models": {
+        "openrouter/auto": {
+          "alias": "OpenRouter"
+        }
+      },
+      "workspace": "/home/bernard/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    }
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": true,
+        "apiKey": "${BRAVE_API_KEY}"
+      },
+      "fetch": {
+        "enabled": true
+      }
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions",
+    "tts": {
+       "auto": "inbound",
+       "provider": "elevenlabs",
+       "elevenlabs": {
+           "voiceId": "onwK4e9ZLuTAKqWW03F9",
+           "modelId": "eleven_multilingual_v2"
+	   }
+       }
+    }, 
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "groupPolicy": "allowlist",
+      "streaming": false
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "${GATEWAY_AUTH_TOKEN}"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "calendar.add",
+        "contacts.add",
+        "reminders.add"
+      ]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      }
+    }
+  },
+    "tools": {
+      "media": {
+        "audio": {
+          "enabled": true,
+           "maxBytes": 20971520,
+            "models": [
+              {
+               "provider": "openai",
+               "model": "gpt-4o-mini-transcribe"
+              }
+            ]
+          }
+        }
+    }	
+
+}
