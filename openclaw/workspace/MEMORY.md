@@ -19,11 +19,11 @@ This file holds durable facts, decisions, and preferences that don't change sess
 1) **Padma Medical Group (PMG)** — Healthcare for overseas workers. Alex is Director of Growth. 17 years operating.
 2) **Kalpa Inovasi Digital** — Healthcare SaaS (WellMed product). Go/PHP/AWS stack. Alex is Board Chair + Acting CEO.
 3) **Narawangsa Villas** — Luxury short-term rentals in Bali. Co-founded with Fie.
-4) **Padma Care** — Medical advocacy for expats in Bali. Community-first model.
+4) **Padma Care** — Medical advocacy for expats in Bali. Division of PMG. Community-first model.
 
 ## Key People
 
-- Dr. Gita, Dr. Pebri, Intan, Okto, Anis, Wahdi, Amanda (per org chart)
+- Dr. Gita, Dr. Pebri, Intan, Okto, Anis, Widhi, Amanda (per org chart)
 
 ## Tool Stack
 
