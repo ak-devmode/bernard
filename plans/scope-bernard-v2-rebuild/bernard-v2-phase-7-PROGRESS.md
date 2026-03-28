@@ -69,3 +69,12 @@
 - **Files modified**: openclaw/workspace/knowledge/padma-care/content-queue.md (created)
 - **Issues**: None
 
+### Task 7.8: SEO Basics Checklist
+- **Status**: ✅ DONE — awaiting HUMAN_REVIEW
+- **Started**: 2026-03-28
+- **Completed**: 2026-03-28
+- **What was done**: Created seo-checklist.md with 13 one-time tasks (technical foundation, content structure, local SEO), weekly monitoring tasks for Bernard, seed keyword list mapped to content queue items, and GEO/AI citation optimization guidance.
+- **Files modified**: openclaw/workspace/knowledge/padma-care/seo-checklist.md (created)
+- **Issues**: None
+- **⏸️ HUMAN_REVIEW**: Alex to confirm checklist is actionable and one-time tasks are completable in a single session
+
