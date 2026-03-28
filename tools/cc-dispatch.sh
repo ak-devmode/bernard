@@ -10,6 +10,16 @@
 
 set -euo pipefail
 
+# Source API key from systemd service if not already in env
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+    ANTHROPIC_API_KEY=$(grep 'ANTHROPIC_API_KEY=' ~/.config/systemd/user/openclaw-gateway.service 2>/dev/null | head -1 | sed 's/.*ANTHROPIC_API_KEY=//')
+    export ANTHROPIC_API_KEY
+fi
+
+# Ensure nvm node is on PATH
+export NVM_DIR="${HOME}/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+
 LOG_DIR="${HOME}/.openclaw/logs"
 LOG_FILE="${LOG_DIR}/cc-dispatch.jsonl"
 mkdir -p "${LOG_DIR}"
@@ -31,8 +41,8 @@ fi
 TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 START_MS=$(date +%s%3N 2>/dev/null || date +%s)
 
-# Dispatch via acpx with JSON output
-OUTPUT=$(acpx --format json claude ${SESSION_FLAG} exec "${TASK}" 2>&1) || EXIT_CODE=$?
+# Dispatch via acpx
+OUTPUT=$(acpx claude ${SESSION_FLAG} exec "${TASK}" 2>&1) || EXIT_CODE=$?
 EXIT_CODE=${EXIT_CODE:-0}
 
 END_MS=$(date +%s%3N 2>/dev/null || date +%s)
