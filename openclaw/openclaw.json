@@ -49,6 +49,7 @@
         "model": "openrouter/anthropic/claude-haiku-4"
       },
       "heartbeat": {
+        "every": "3h",
         "model": "openrouter/anthropic/claude-haiku-4"
       }
     }
