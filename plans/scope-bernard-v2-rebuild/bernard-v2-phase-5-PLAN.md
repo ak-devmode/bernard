@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -38,49 +38,61 @@
 - **Output**: Updated USER.md with ingestion criteria
 - **Acceptance**: Alex confirms criteria list is complete and accurate
 
-### Task 5.2: Build Email Summarization Pipeline
+### Task 5.2: Build Unified Ingestion Pipeline — ENG REVIEW: merged from separate email+WA scripts
 - **Type**: AI
 - **Input**: PRD §3.4 (input hygiene), §4.2 (ingestion pipeline)
 - **Action**:
-  Create `tools/ingest-email.py` (or .js — match server stack):
-  1. Input: raw email text (from stdin or file)
-  2. Summarize using Haiku (cheapest model, sufficient for summarization)
-  3. PII strip pass: regex for emails, phones, ID numbers + LLM verification
-  4. Output: structured markdown to `knowledge/comms/email/YYYY-MM-DD-{subject-slug}.md`
+  Create `tools/ingest.py` — single script handling both sources via `--source` flag:
+  ```bash
+  python3 tools/ingest.py --source email < raw_email.txt
+  python3 tools/ingest.py --source whatsapp < wa_export.txt
+  python3 tools/ingest.py --source email --dry-run < raw_email.txt
+  ```
 
-  Output format:
+  Core pipeline (shared for all sources):
+  1. Input: raw text from stdin or file
+  2. PII strip pass (calls `pii_strip.py`): regex for emails, phones, ID numbers + LLM verification
+  3. Summarize using Haiku (cheapest model, sufficient for summarization)
+  4. Dedup check: hash subject+date, skip if output file exists (CEO review addition)
+  5. Output: structured markdown to `knowledge/comms/{source}/YYYY-MM-DD-{slug}.md`
+
+  Output format (email):
   ```markdown
   ---
   date: YYYY-MM-DD
   from: {role/relationship, not name}
   topic: {one-line summary}
+  source: email
   ---
   {2-3 sentence summary}
   **Action items:** {list or "none"}
   **Follow-up by:** {date or "none"}
   ```
 
-  Include dry-run mode that shows output without writing to vault.
-- **Output**: `tools/ingest-email.py` with dry-run support
-- **Acceptance**: Dry run on sample email produces clean, PII-stripped summary
-
-### Task 5.3: Build WA/Chatwoot Summarization Pipeline
-- **Type**: AI
-- **Input**: PRD §3.4, §4.2
-- **Action**:
-  Create `tools/ingest-wa.py`:
-  1. Input: WA/Chatwoot conversation export (text format)
-  2. Summarize using Haiku
-  3. PII strip: same rules as email pipeline
-  4. Output: structured markdown to `knowledge/comms/whatsapp/YYYY-MM-DD-{topic-slug}.md`
-
-  Same output format as email but with:
+  Output format (whatsapp/chatwoot) adds:
   - `participants:` field (roles, not names)
   - `source: whatsapp|chatwoot`
 
-  Include dry-run mode.
-- **Output**: `tools/ingest-wa.py` with dry-run support
-- **Acceptance**: Dry run on sample conversation produces clean summary
+  Source-specific logic lives in `parse_input()` — the rest of the pipeline is shared.
+  Include `--dry-run` mode that shows output without writing to vault.
+
+- **Output**: `tools/ingest.py` with `--source email|whatsapp`, dry-run support, and dedup
+- **Acceptance**: Dry run on sample email and WA conversation both produce clean, PII-stripped summaries. Running twice doesn't create duplicates.
+
+### Task 5.3: Unit Tests for ingest.py — ENG REVIEW ADDITION
+- **Type**: AI
+- **Input**: `tools/ingest.py` from Task 5.2
+- **Action**:
+  Create `tools/test_ingest.py` with tests covering:
+  1. `parse_input()` — email format parsed correctly, WA format parsed correctly, malformed input raises clear error
+  2. `dedup_check()` — returns True when file exists, False when new
+  3. `write_vault_entry()` — output file created in correct directory with correct frontmatter
+  4. Bad/empty input handling — graceful failure, no partial writes
+  5. `--dry-run` flag — no files written to disk
+
+  Run with: `python3 -m pytest tools/test_ingest.py`
+- **Output**: `tools/test_ingest.py` with ≥5 test cases
+- **Acceptance**: All tests pass. `pytest` exits clean.
 
 ### Task 5.4: PII Stripping Utility
 - **Type**: AI
@@ -96,7 +108,7 @@
 - **Output**: `tools/pii_strip.py` with tests
 - **Acceptance**: All known PII patterns caught, LLM verification finds no leaks
 
-### Task 5.5: Configure ContextEngine afterTurn Hook
+### Task 5.5: Configure ContextEngine afterTurn Hook — renumbered from 5.5 (was 5.6 before merge)
 - **Type**: AI (SSH + research)
 - **Input**: PRD §5.2 (afterTurn hook for FEEDBACK.md)
 - **Action**:
@@ -131,9 +143,8 @@
 - **Input**: All tools/ files
 - **Action**:
   ```bash
-  rsync -avz tools/ bernard@54.254.76.94:~/bernard/tools/
-  # Install Python dependencies if needed
-  ssh ... "cd ~/bernard && pip install -r tools/requirements.txt"
+  git add -A && git commit -m "feat: phase 5 ingestion pipeline" && git push
+  ssh ... "sudo -u bernard bash -c 'cd ~/bernard && git pull && pip install -r tools/requirements.txt'"
   ```
   Test pipelines work on server environment.
 - **Output**: Pipelines functional on server

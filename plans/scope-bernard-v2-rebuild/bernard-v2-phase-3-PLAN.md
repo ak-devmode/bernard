@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -67,21 +67,49 @@
 - **Output**: Comms directory structure
 - **Acceptance**: Directories exist, README explains the rules
 
-### Task 3.5: Research & Configure QMD Backend
-- **Type**: AI (SSH + research)
+### Task 3.5: Install & Configure QMD Backend
+- **Type**: AI (SSH) — ENG REVIEW: research resolved, QMD is a separate install
 - **Input**: PRD §4.3 QMD config, OpenClaw docs
 - **Action**:
-  1. SSH into server, check if QMD is available:
-     ```bash
-     openclaw --help | grep -i qmd
-     openclaw memory --help 2>/dev/null
-     ```
-  2. If built-in: add QMD config to openclaw.json per PRD §4.3 (BM25 + vector + LLM reranking, 5m update interval, 6 max results)
-  3. If separate: research installation method, install, configure
-  4. If neither: document the gap, evaluate alternatives (simple file search as fallback)
+  QMD is a separate tool by Tobi Lütke. Install on server:
+  ```bash
+  # As bernard user on server:
+  # Option A: via bun
+  bun install -g https://github.com/tobi/qmd
+  # Option B: grab binary release from GitHub
+  # Ensure qmd is on PATH for the OpenClaw gateway process
+
+  # QMD needs SQLite with extensions:
+  sudo apt install libsqlite3-dev  # if not already present
+
+  # Verify:
+  qmd --version
+  ```
+  Add QMD config to `openclaw.json`:
+  ```json
+  "memory": {
+    "backend": "qmd",
+    "citations": "auto",
+    "qmd": {
+      "includeDefaultMemory": true,
+      "searchMode": "query",
+      "update": {
+        "interval": "5m",
+        "debounceMs": 15000,
+        "onBoot": true
+      },
+      "limits": {
+        "maxResults": 6,
+        "maxSnippetChars": 700,
+        "timeoutMs": 4000
+      }
+    }
+  }
+  ```
   Point QMD at `workspace/knowledge/` as the indexed directory.
-- **Output**: QMD configured and indexing vault, or documented gap with fallback
-- **Acceptance**: `openclaw` can search vault content and return relevant results
+  Start with `searchMode: "search"` (BM25, fast) and upgrade to `"query"` (hybrid+reranking) once vault has 10+ files.
+- **Output**: QMD installed, configured, indexing vault
+- **Acceptance**: `qmd --version` works. OpenClaw can search vault content and return relevant results.
 
 ### Task 3.6: Write Daily Curation Loop Template
 - **Type**: AI
@@ -127,9 +155,10 @@
 - **Input**: All vault files created in this phase
 - **Action**:
   ```bash
-  rsync -avz openclaw/workspace/ bernard@54.254.76.94:.openclaw/workspace/
+  git add -A && git commit -m "feat: phase 3 vault and qmd" && git push
+  ssh ... "sudo -u bernard bash -c 'cd ~/bernard && git pull'"
   ```
-  Verify vault structure on server. Test QMD indexing if configured.
+  Verify vault structure on server via symlinks. Test QMD indexing if configured.
 - **Output**: Vault live on server, QMD indexing
 - **Acceptance**: `ls -R workspace/knowledge/` shows full tree, QMD returns results
 

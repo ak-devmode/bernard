@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -36,10 +36,11 @@
 - **Output**: Claude Code installed and authenticated on server
 - **Acceptance**: `claude --version` returns a version, auth is configured
 
-### Task 6.2: Install acpx
-- **Type**: AI (SSH)
+### Task 6.2: Install acpx & Configure ACP in openclaw.json — ENG REVIEW: added config block
+- **Type**: AI (SSH + local)
 - **Input**: PRD §7 (ACP dispatch), §9 Phase 4
 - **Action**:
+  Install acpx:
   ```bash
   sudo -u bernard bash -c 'npm install -g acpx@latest'
   # Verify:
@@ -49,8 +50,20 @@
   - Check OpenClaw docs for native ACP support
   - Check if `openclaw exec` is the native command
   - Fall back to custom bridge script if needed
-- **Output**: ACP bridge tool installed or alternative documented
-- **Acceptance**: A working command exists to dispatch tasks from OpenClaw to CC
+
+  Add ACP config block to `openclaw/openclaw.json`:
+  ```json
+  "acp": {
+    "enabled": true,
+    "dispatch": {
+      "enabled": true,
+      "backend": "acpx"
+    }
+  }
+  ```
+  Verify config validates with `jq . openclaw.json`.
+- **Output**: ACP bridge tool installed, openclaw.json updated with ACP config
+- **Acceptance**: A working command exists to dispatch tasks from OpenClaw to CC. Config validates.
 
 ### Task 6.3: Test Basic ACP Dispatch
 - **Type**: AI (SSH)

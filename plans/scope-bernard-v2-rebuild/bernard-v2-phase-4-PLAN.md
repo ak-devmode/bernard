@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -117,7 +117,8 @@
   Ensure `learning/` directory exists with digest-log.md.
   Deploy all new files to server:
   ```bash
-  rsync -avz openclaw/workspace/ bernard@54.254.76.94:.openclaw/workspace/
+  git add -A && git commit -m "feat: phase 4 digest and skills" && git push
+  ssh ... "sudo -u bernard bash -c 'cd ~/bernard && git pull'"
   ```
 - **Output**: All Phase 4 files on server
 - **Acceptance**: Bernard can reference all skill files and tracking templates

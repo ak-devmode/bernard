@@ -29,11 +29,19 @@
 - Do not claim you cannot access local secrets — they are loaded and available. Use them when needed.
 - Never echo or log secret values in plaintext.
 
-## Cost Awareness
-- Use the cheapest model that can do the job
+## Cost Awareness & Model Selection
+- Primary model: Claude Sonnet 4 — use for everyday conversation, research, planning, writing
+- Escalate to Claude Opus 4 — complex multi-step reasoning, critical decisions, deep analysis
+- Drop to Gemini Flash — simple acknowledgements, quick lookups, calendar checks, yes/no answers
 - Simple lookups, calendar checks, summaries: no subagents
 - Complex research or multi-step tasks: subagents appropriate
 - Flag if a task is going to be unusually expensive before starting
+
+## Model Override Rules
+- When Alex explicitly requests a specific model (e.g. "use Gemini Flash", "run through Claude Opus"), switch to that model using session_status with the model parameter
+- Supported model aliases: "gemini flash", "claude opus", "claude sonnet"
+- Override remains active for the current conversation thread until changed again or reset
+- Use "default" to reset to primary model
 
 ## Communication
 - Telegram: primary channel

@@ -42,19 +42,19 @@ Codify Padma Care voice in vault (voice.md). Document free/paid line (free-paid-
 ## Architecture
 
 ```
-Local repo (this machine)          Server (54.254.76.94)
-├── openclaw/                      /home/bernard/.openclaw/
-│   ├── workspace/  ──rsync──►     ├── workspace/
-│   │   ├── SOUL.md                │   ├── SOUL.md
-│   │   ├── FEEDBACK.md            │   ├── FEEDBACK.md
-│   │   ├── MEMORY.md              │   ├── MEMORY.md
-│   │   ├── knowledge/             │   ├── knowledge/  ◄── QMD indexes this
-│   │   └── ...                    │   └── ...
-│   └── openclaw.json              ├── openclaw.json
-├── tools/                         ├── tools/ (ingestion pipelines)
-├── infra/                         └── .env (secrets)
-└── plans/
-    └── scope-bernard-v2-rebuild/
+GitHub (source of truth)
+         │
+    git push/pull
+         │
+    ┌────┴────┐
+    ▼         ▼
+ LOCAL MAC   SERVER (54.254.76.94)
+ ├── repo    ├── repo (~/bernard/)
+ ├── .env    ├── .env (production keys, chmod 600)
+ └── edit    └── ~/.openclaw/
+                  ├── workspace → ~/bernard/openclaw/workspace (symlink)
+                  ├── openclaw.json → ~/bernard/openclaw/openclaw.json (symlink)
+                  └── QMD indexes knowledge/ via symlink
 ```
 
 ## What Already Exists
@@ -107,3 +107,28 @@ Local repo (this machine)          Server (54.254.76.94)
 - QMD: unknown if built-in or separate — Plan 3 researches and handles either case
 - All 7 plans generated upfront, user runs /plan at their own pace
 - Voice (ElevenLabs/Whisper) stays disabled until voice readiness gate passed (2 weeks useful digests)
+
+### CEO Review Additions (2026-03-28)
+- **Git+symlinks replaces rsync** — repo cloned on server, ~/.openclaw/ symlinks to repo clone. Deploy = `git pull`. No more rsync. Secrets in .env (gitignored, chmod 600).
+- **Phases 1-3 can compress** — run back-to-back without stopping. Plan files stay separate for /plan execution.
+- **Reactive-first philosophy** — Bernard earns proactive behavior through trust. No proactive features until Alex wishes Bernard had been proactive ≥10 times.
+- **Simple dedup** in ingestion pipeline — hash subject+date, skip if file exists.
+- **PII failsafe accepted as-is** — regex is primary defense, LLM verification is bonus. No quarantine directory.
+
+### Eng Review Findings (2026-03-28)
+- **openclaw.json duplicate `tools` key** — two top-level `tools` blocks cause silent config loss. Fix merged into Phase 1 Task 1.3.
+- **DRY: single ingest.py** — email and WA pipelines merged into `tools/ingest.py --source email|whatsapp`. Phase 5 Tasks 5.2+5.3 replaced.
+- **Unit tests for ingest.py** — added as Phase 5 Task 5.3: parse_input, dedup_check, write_vault_entry, bad input handling.
+- **QMD resolved** — separate install by Tobi Lütke (`bun install -g`), not built into OpenClaw. Phase 3 Task 3.5 updated.
+- **ACP config block** — `acp.enabled`, `acp.dispatch.enabled`, `backend: "acpx"` needed in openclaw.json. Phase 6 Task 6.2 updated.
+
+## GSTACK REVIEW REPORT
+
+| Review | Trigger | Why | Runs | Status | Findings |
+|--------|---------|-----|------|--------|----------|
+| CEO Review | `/plan-ceo-review` | Scope & strategy | 1 | PASS | 3 expansions proposed, 0 accepted. Git+symlinks adopted. Reactive-first confirmed. Dedup added. |
+| Codex Review | `/codex review` | Independent 2nd opinion | 0 | — | — |
+| Eng Review | `/plan-eng-review` | Architecture & tests (required) | 1 | PASS | 3 issues found+resolved: duplicate JSON key, DRY violation, missing tests. QMD+ACP configs documented. |
+| Design Review | `/plan-design-review` | UI/UX gaps | 0 | N/A | No UI component |
+
+**VERDICT:** CEO + ENG reviews complete. All findings resolved inline. Ready to execute Phase 1.

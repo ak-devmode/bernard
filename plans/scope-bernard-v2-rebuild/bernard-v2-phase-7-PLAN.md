@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -239,9 +239,10 @@
   ```
   Deploy to server:
   ```bash
-  rsync -avz openclaw/workspace/ bernard@54.254.76.94:.openclaw/workspace/
+  git add -A && git commit -m "feat: phase 7 padma care community engine" && git push
+  ssh ... "sudo -u bernard bash -c 'cd ~/bernard && git pull'"
   ```
-  Verify QMD indexes the new files.
+  Verify QMD indexes the new files via symlinked workspace.
 - **Output**: Full Padma Care knowledge base on server
 - **Acceptance**: All 8 files on server, QMD can search them
 

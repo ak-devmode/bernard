@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -96,7 +96,8 @@
 - **Input**: All updated workspace files
 - **Action**:
   ```bash
-  rsync -avz openclaw/workspace/ bernard@54.254.76.94:.openclaw/workspace/
+  git add -A && git commit -m "feat: phase 2 identity and learning loop" && git push
+  ssh ... "sudo -u bernard bash -c 'cd ~/bernard && git pull'"
   ```
   Verify files landed correctly. Restart Bernard session to pick up new identity.
 - **Output**: Server workspace reflects v2 identity

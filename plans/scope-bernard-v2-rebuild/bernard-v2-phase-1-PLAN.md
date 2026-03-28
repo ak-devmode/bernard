@@ -3,9 +3,9 @@
 **Version:** 0.1
 **Date:** 2026-03-28
 **Author:** Alex
-**Status:** Draft
+**Status:** Ready to execute
 **Parent scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Branch:** main
+**Branch:** bernard-v2
 
 ## Related Docs
 - `plans/scope-bernard-v2-rebuild/scope.md` — parent scope
@@ -36,24 +36,21 @@
   # As bernard user on server:
   npm install -g openclaw@latest
   openclaw --version
-  openclaw doctor --fix
+  openclaw doctor  # READ ONLY — never use --fix, it nukes config sections
   ```
   Update `infra/openclaw-version.txt` locally to match new version.
-- **Output**: OpenClaw on latest stable, doctor issues resolved
-- **Acceptance**: `openclaw --version` shows latest, `openclaw doctor` reports clean
+  **NOTE**: `openclaw doctor --fix` is permanently banned — it wiped tools.web and pairing state on 2026-03-28. Diagnostics only.
+- **Output**: OpenClaw on latest stable, doctor diagnostics reviewed
+- **Acceptance**: `openclaw --version` shows latest, any doctor warnings documented (not auto-fixed)
 
-### Task 1.3: Disable Voice (ElevenLabs + Whisper)
-- **Type**: AI (local)
+### Task 1.3: Fix openclaw.json Structure + Disable Voice
+- **Type**: AI (local) — ENG REVIEW ADDITION: fix duplicate `tools` key
 - **Input**: `openclaw/openclaw.json`
 - **Action**:
-  Remove or disable the TTS config block:
-  ```json
-  "tts": { "auto": "off" }
-  ```
-  Comment rationale: voice disabled until voice readiness gate passed (PRD §5.4).
-  Do NOT remove Whisper from the server — just disable in config. May re-enable later.
-- **Output**: Updated `openclaw/openclaw.json`
-- **Acceptance**: No TTS triggers on message send
+  1. **Fix duplicate `tools` key** — current file has two top-level `tools` blocks (web search at line ~41 and media/audio at line ~107). Merge into a single `tools` block containing both `web` and `media` sections. This is invalid JSON causing silent config loss.
+  2. **Disable TTS** — set `"tts": { "auto": "off" }` in the messages block. Voice disabled until voice readiness gate passed (PRD §5.4). Do NOT remove Whisper from the server — just disable in config.
+- **Output**: Valid openclaw.json with merged tools block and voice disabled
+- **Acceptance**: `jq . openclaw.json` validates without error. No TTS triggers.
 
 ### Task 1.4: Configure Model Routing Tiers
 - **Type**: AI (local)
@@ -77,8 +74,35 @@
 - **Output**: Budget cap in config or documented workaround
 - **Acceptance**: Cost control mechanism is active
 
-### Task 1.6: Initialize Vault Directory Structure on Server
-- **Type**: AI (local + SSH)
+### Task 1.6: Set Up Git+Symlinks Deployment Model
+- **Type**: AI (SSH) — CEO REVIEW ADDITION
+- **Input**: Server access, GitHub repo URL
+- **Action**:
+  Replace rsync deployment with git+symlinks. This is the new standard deploy model.
+  ```bash
+  # On server as bernard user:
+  cd ~
+  git clone git@github.com:ak-devmode/bernard.git  # or HTTPS
+
+  # Symlink OpenClaw workspace and config to repo
+  rm -rf ~/.openclaw/workspace  # remove old copy
+  ln -sf ~/bernard/openclaw/workspace ~/.openclaw/workspace
+  ln -sf ~/bernard/openclaw/openclaw.json ~/.openclaw/openclaw.json
+
+  # Secure .env
+  cp ~/bernard/infra/env.example ~/bernard/.env
+  # Edit .env with production API keys
+  chmod 600 ~/bernard/.env
+  ```
+  Add SSH deploy key to GitHub repo (read+write for CC push access).
+  Verify OpenClaw picks up symlinked files correctly.
+
+  **From now on, deploy = `git pull` on server. No more rsync.**
+- **Output**: Repo cloned on server, symlinks active, .env secured
+- **Acceptance**: OpenClaw starts and loads workspace files via symlinks. `git pull` updates files correctly.
+
+### Task 1.7: Initialize Vault Directory Structure
+- **Type**: AI (local)
 - **Input**: PRD §4.1 vault structure
 - **Action**:
   Create directory tree locally under `openclaw/workspace/`:
@@ -95,11 +119,11 @@
   learning/
   ```
   Add `.gitkeep` files to empty dirs. Create `knowledge/README.md` explaining the vault structure and ingestion rules.
-  Deploy to server via rsync.
+  Commit and push. On server: `git pull` picks it up via symlinks.
 - **Output**: Vault directory tree exists locally and on server
-- **Acceptance**: `ls -R` on server shows full tree
+- **Acceptance**: `ls -R` on server shows full tree via symlinks
 
-### Task 1.7: Update Context Compaction Config
+### Task 1.8: Update Context Compaction Config
 - **Type**: AI (local)
 - **Input**: `openclaw/openclaw.json`, PRD §9 config
 - **Action**:
@@ -113,20 +137,24 @@
 - **Output**: Updated `openclaw/openclaw.json`
 - **Acceptance**: Compaction config matches PRD
 
-### Task 1.8: Deploy Config to Server
-- **Type**: AI (SSH)
-- **Input**: Updated local files
+### Task 1.9: Deploy and Verify
+- **Type**: AI (local + SSH)
+- **Input**: All updated local files
 - **Action**:
   ```bash
-  rsync -avz openclaw/workspace/ bernard@54.254.76.94:.openclaw/workspace/
-  # openclaw.json deployed separately — requires secret interpolation check
+  # Local: commit and push all Phase 1 changes
+  git add -A && git commit -m "feat: phase 1 foundation config" && git push
+
+  # Server: pull and verify
+  ssh ... "sudo -u bernard bash -c 'cd ~/bernard && git pull'"
+  ssh ... "sudo -u bernard bash -c 'openclaw gateway status'"
   ```
-  Verify deployed config on server. Restart OpenClaw if needed.
-- **Output**: Server reflects v2 config
-- **Acceptance**: `openclaw gateway status` shows healthy, config matches local
+  Verify: OC version, voice disabled, model routing, vault dirs, heartbeat, compaction config.
+- **Output**: Server reflects v2 config via git+symlinks
+- **Acceptance**: `openclaw gateway status` healthy, all configs match PRD
 
 ---
 
 ### CHECKPOINT: Phase 1 Complete
-**Review**: Verify on server: OC version, voice disabled, model routing, vault dirs exist, heartbeat interval
+**Review**: Verify on server: OC version, voice disabled, model routing, vault dirs exist, heartbeat interval, git+symlinks working, .env permissions 600
 **Resume**: "continue the bernard-v2 plan — Phase 1 complete, start Phase 2"

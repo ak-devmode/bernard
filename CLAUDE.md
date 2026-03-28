@@ -12,7 +12,7 @@ Bernard is Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC
 - OpenClaw is installed via npm at a pinned version (see `infra/openclaw-version.txt`)
 - Bernard's personality lives in `openclaw/workspace/` (SOUL.md, IDENTITY.md, etc.)
 - Secrets (API keys, tokens, credentials) are gitignored — see `infra/env.example` and `infra/openclaw.json.template`
-- The `openclaw/openclaw.json` in this repo contains live tokens — **do not commit changes to it without sanitizing first**
+- `openclaw/openclaw.json` uses `${ENV_VAR}` references for secrets — safe to commit. Actual keys live in systemd service `Environment=` lines on server.
 
 ## Server access
 ```
@@ -24,9 +24,27 @@ Bernard runs as the `bernard` user (password saved in password manager). OpenCla
 
 The `ubuntu` user has sudo. The `bernard` user does NOT have sudo (intentional).
 
-## Key commands
-- Deploy workspace changes: `rsync -avz -e "ssh -i ~/.ssh/awk_sandbox.pem" openclaw/workspace/ ubuntu@54.254.76.94:/tmp/workspace/ && ssh ... sudo cp -r /tmp/workspace/ /home/bernard/.openclaw/workspace/`
-- Deploy config: `rsync -avz -e "ssh -i ~/.ssh/awk_sandbox.pem" openclaw/openclaw.json ubuntu@54.254.76.94:/tmp/openclaw.json && ssh ... sudo cp /tmp/openclaw.json /home/bernard/.openclaw/openclaw.json && sudo chown bernard:bernard ...`
+## Deployment (git+symlinks)
+Deploy = push to GitHub, then pull on server. No more rsync.
+```bash
+# From local: push changes
+git push origin bernard-v2
+
+# On server: pull and restart (as bernard user)
+ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94 \
+  "sudo -u bernard bash ~/bernard/infra/deploy.sh"
+
+# Or manually:
+ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94 \
+  "sudo -u bernard bash -c 'cd ~/bernard && git pull --ff-only && systemctl --user restart openclaw-gateway.service'"
+```
+
+Server repo: `~/bernard/` (cloned from GitHub)
+Symlinks:
+- `~/.openclaw/workspace` → `~/bernard/openclaw/workspace`
+- `~/.openclaw/openclaw.json` → `~/bernard/openclaw/openclaw.json`
+
+## Other commands
 - Check pinned version: `cat infra/openclaw-version.txt`
 - Update OpenClaw on server: `bash infra/update.sh`
 - Restart gateway: `systemctl --user restart openclaw-gateway.service`
@@ -46,7 +64,7 @@ The `ubuntu` user has sudo. The `bernard` user does NOT have sudo (intentional).
 - Telegram allowlist: `~/.openclaw/credentials/telegram-default-allowFrom.json` (Alex's Telegram ID: `8522147628`)
 
 ## Known gotchas
-- **Never run `openclaw doctor --fix` casually** — it can wipe config sections (tools.web, pairing state, etc.)
+- **NEVER run `openclaw doctor --fix`** — permanently banned. On 2026-03-28 it wiped tools.web config and pairing state. Use `openclaw doctor` (read-only) for diagnostics only.
 - **Never strip keys from openclaw.json then upgrade** — the upgrade reads the stripped config and wipes pairing/auth state
 - **Config workflow**: edit `openclaw/openclaw.json` locally (with `${ENV_VAR}` refs) → commit → rsync to server. Use `infra/openclaw.json.template` for the gitignored version.
 - **Telegram pairing**: if pairing CLI hangs, manually edit `~/.openclaw/credentials/telegram-default-allowFrom.json` instead
