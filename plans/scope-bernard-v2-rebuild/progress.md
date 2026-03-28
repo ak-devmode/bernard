@@ -5,11 +5,11 @@
      into a new conversation to get oriented. -->
 **Scope:** plans/scope-bernard-v2-rebuild/scope.md
 **Branch:** bernard-v2
-**Last action:** Phases 1-6 complete (2026-03-28) — single session, all deployed to server
-**Next action:** Execute Phase 7 plan — `plans/scope-bernard-v2-rebuild/bernard-v2-phase-7-PLAN.md`
+**Last action:** Phase 7 complete (2026-03-28) — Padma Care community engine deployed, 8 knowledge files on server
+**Next action:** Execute Phase 8 plan — `plans/scope-bernard-v2-rebuild/bernard-v2-phase-8-PLAN.md` (Knowledge Bootstrap)
 **Open blockers:** None
-**Server:** 54.251.203.204, gateway healthy, QMD indexing 24 files, CC dispatch working
-**What's live:** Identity, vault (projects/people/ideas/comms), digest template, 5 skills, ingestion pipeline, PII stripping, CC dispatch via acpx, JSONL logging
+**Server:** 54.251.203.204, gateway healthy, QMD indexing 32+ files, CC dispatch working
+**What's live:** Identity, vault (projects/people/ideas/comms), digest template, 5 skills, ingestion pipeline, PII stripping, CC dispatch via acpx, JSONL logging, Padma Care knowledge base (voice, free/paid line, platforms, monitoring, response drafting, pipeline tracker, content queue, SEO checklist)
 **Human TODOs:** `plans/scope-bernard-v2-rebuild/TODO-alex.md` (priorities, people files, board dates, etc.)
 **Someday list:** `plans/scope-bernard-v2-rebuild/TOMORROW.md`
 
@@ -56,6 +56,7 @@
 | 2026-03-28 | Phase 4 | Done | Digest: DIGEST.md (4-section daily digest), 5 skills (dropped balls, board topics, staff check-ins, pricing, house projects), tracking/ dir with templates, QMD now indexing 23 files |
 | 2026-03-28 | Phase 5 | Done | Ingestion: ingest.py (email/WA/Chatwoot), pii_strip.py (regex+LLM), 26 tests passing, auto-learn skill, USER.md criteria filled. Pipeline works on server. QMD indexing 24 files. |
 | 2026-03-28 | Phase 6 | Done | CC Dispatch: Claude Code 2.1.86 + acpx 0.3.1 installed. System node upgraded to v24. AGENTS.md dispatch rules with approval gate. cc-dispatch.sh logging wrapper. JSONL logging active. E2E dispatch tested. |
+| 2026-03-28 | Phase 7 | Done | Padma Care Community Engine: 8 knowledge files (voice, free/paid line, platforms, monitoring template, response drafting, pipeline tracker, content queue, SEO checklist). Deployed to server. Alex feedback: Retire in Bali FB group added, WA groups = highest signal, WA monitoring architecture problem captured as TODO. |
 
 ---
 
@@ -82,7 +83,7 @@
 | bernard-v2-phase-4-PLAN.md | 4 — Digest & Phase 2 Skills | Done | DIGEST.md, 5 skills, 6 tracking templates, digest-log.md |
 | bernard-v2-phase-5-PLAN.md | 5 — Ingestion Pipeline | Done | ingest.py, pii_strip.py, 26 tests, auto-learn.md, USER.md criteria |
 | bernard-v2-phase-6-PLAN.md | 6 — CC Dispatch | Done | CC 2.1.86, acpx 0.3.1, dispatch working, JSONL logging, approval gate in AGENTS.md |
-| bernard-v2-phase-7-PLAN.md | 7 — Padma Care Community | Ready to execute | Voice docs, monitoring, response templates, SEO |
+| bernard-v2-phase-7-PLAN.md | 7 — Padma Care Community | Done | 8 knowledge files deployed: voice, free/paid, platforms, monitoring, drafting, pipeline, content queue, SEO |
 
 ---
 
