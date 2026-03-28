@@ -4,10 +4,10 @@
 <!-- Updated after every significant action. Paste the first 20 lines of this file
      into a new conversation to get oriented. -->
 **Scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Last action:** Phase 5 complete (2026-03-28) — ingestion pipeline, PII stripping, auto-learn deployed
-**Next action:** Execute Phase 6 plan (CC Dispatch) — or pause here for 2-week eval
-**Open blockers:** Phase 6 requires CC installed on VM
-**Key files changed:** ingest.py, pii_strip.py, test_ingest.py, USER.md (criteria), auto-learn.md
+**Last action:** Phase 6 complete (2026-03-28) — CC dispatch via acpx working, JSONL logging active
+**Next action:** Execute Phase 7 plan (Padma Care Community) — final phase
+**Open blockers:** None
+**Key files changed:** AGENTS.md (dispatch rules), cc-dispatch.sh, env.example
 
 ---
 
@@ -21,6 +21,10 @@
 - (2026-03-28) QMD collection path quirk: QMD maps collection name to ~/name/, so we symlink ~/vault → the actual knowledge dir
 - (2026-03-28) QMD searchMode starts as "search" (BM25) — upgrade to "query" once vault has 10+ meaningful files
 - (2026-03-28) OpenClaw stability note: QMD memory backend has known stability issues (GitHub #11308) — monitor after deploy
+- (2026-03-28) acpx is the ACP bridge (npm 0.3.1) — Bernard shells out to `acpx claude exec "..."`, no openclaw.json config needed
+- (2026-03-28) System node upgraded from v22 to v24 (NodeSource) — both ubuntu and bernard users benefit
+- (2026-03-28) CC auth: Bernard uses ANTHROPIC_API_KEY from systemd env. Alex uses Pro OAuth (logged in as ubuntu).
+- (2026-03-28) PR creation E2E deferred — dispatch pipeline confirmed working, test with real repo when needed
 - (2026-03-28) CC not on server — Plan 6 blocked until CC installed (prerequisite added)
 - (2026-03-28) Voice stays disabled — explicit gate: 2 weeks of useful text digests before re-enabling
 - (2026-03-28) ENG REVIEW: openclaw.json has duplicate `tools` key causing silent config loss — fix in Phase 1 Task 1.3
@@ -47,6 +51,7 @@
 | 2026-03-28 | Phase 3 | Done | Vault: 4 project files, templates (people/ideas), principles, priorities, comms structure, CURATION.md, QMD v2.0.1 installed + indexing 12 files, gateway restarted with QMD memory backend |
 | 2026-03-28 | Phase 4 | Done | Digest: DIGEST.md (4-section daily digest), 5 skills (dropped balls, board topics, staff check-ins, pricing, house projects), tracking/ dir with templates, QMD now indexing 23 files |
 | 2026-03-28 | Phase 5 | Done | Ingestion: ingest.py (email/WA/Chatwoot), pii_strip.py (regex+LLM), 26 tests passing, auto-learn skill, USER.md criteria filled. Pipeline works on server. QMD indexing 24 files. |
+| 2026-03-28 | Phase 6 | Done | CC Dispatch: Claude Code 2.1.86 + acpx 0.3.1 installed. System node upgraded to v24. AGENTS.md dispatch rules with approval gate. cc-dispatch.sh logging wrapper. JSONL logging active. E2E dispatch tested. |
 
 ---
 
@@ -72,7 +77,7 @@
 | bernard-v2-phase-3-PLAN.md | 3 — Vault & QMD | Done | Vault populated, QMD v2.0.1 installed, 12 files indexed, curation loop |
 | bernard-v2-phase-4-PLAN.md | 4 — Digest & Phase 2 Skills | Done | DIGEST.md, 5 skills, 6 tracking templates, digest-log.md |
 | bernard-v2-phase-5-PLAN.md | 5 — Ingestion Pipeline | Done | ingest.py, pii_strip.py, 26 tests, auto-learn.md, USER.md criteria |
-| bernard-v2-phase-6-PLAN.md | 6 — CC Dispatch | Ready to execute | CC install, ACP bridge, approval gate |
+| bernard-v2-phase-6-PLAN.md | 6 — CC Dispatch | Done | CC 2.1.86, acpx 0.3.1, dispatch working, JSONL logging, approval gate in AGENTS.md |
 | bernard-v2-phase-7-PLAN.md | 7 — Padma Care Community | Ready to execute | Voice docs, monitoring, response templates, SEO |
 
 ---
