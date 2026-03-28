@@ -69,12 +69,7 @@
   "messages": {
     "ackReactionScope": "group-mentions",
     "tts": {
-      "auto": "inbound",
-      "provider": "elevenlabs",
-      "elevenlabs": {
-        "voiceId": "onwK4e9ZLuTAKqWW03F9",
-        "modelId": "eleven_multilingual_v2"
-      }
+      "auto": "off"
     }
   },
   "commands": {
