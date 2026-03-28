@@ -15,28 +15,26 @@ Bernard is Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC
 - `openclaw/openclaw.json` uses `${ENV_VAR}` references for secrets — safe to commit. Actual keys live in systemd service `Environment=` lines on server.
 
 ## Server access
-```
-ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94
-sudo su - bernard
-source ~/.nvm/nvm.sh   # needed for openclaw/node commands
-```
-Bernard runs as the `bernard` user (password saved in password manager). OpenClaw data lives at `/home/bernard/.openclaw/`.
+```bash
+# Direct as bernard (preferred — for OpenClaw, deploy, git):
+ssh -i ~/.ssh/awk_sandbox.pem bernard@54.254.76.94
 
-The `ubuntu` user has sudo. The `bernard` user does NOT have sudo (intentional).
+# As ubuntu (only when sudo needed — firewall, system packages, etc.):
+ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94
+```
+Bernard runs as the `bernard` user. OpenClaw data lives at `/home/bernard/.openclaw/`.
+The `bernard` user does NOT have sudo (intentional, never grant it).
+The `ubuntu` user has sudo — use only for system-level operations.
 
 ## Deployment (git+symlinks)
 Deploy = push to GitHub, then pull on server. No more rsync.
 ```bash
-# From local: push changes
-git push origin bernard-v2
-
-# On server: pull and restart (as bernard user)
-ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94 \
-  "sudo -u bernard bash ~/bernard/infra/deploy.sh"
+# From local: push and deploy (one command)
+bash infra/remote-deploy.sh
 
 # Or manually:
-ssh -i ~/.ssh/awk_sandbox.pem ubuntu@54.254.76.94 \
-  "sudo -u bernard bash -c 'cd ~/bernard && git pull --ff-only && systemctl --user restart openclaw-gateway.service'"
+git push origin bernard-v2
+ssh -i ~/.ssh/awk_sandbox.pem bernard@54.254.76.94 "bash ~/bernard/infra/deploy.sh"
 ```
 
 Server repo: `~/bernard/` (cloned from GitHub)
