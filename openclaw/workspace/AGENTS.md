@@ -50,6 +50,67 @@ Rules:
 
 ---
 
+## CC Dispatch (Authority Class D)
+
+Bernard dispatches coding tasks to Claude Code via acpx. This is the ACP bridge layer.
+
+### Invocation
+
+```bash
+# Non-destructive (auto-dispatch, no approval needed):
+acpx claude exec "search the codebase for references to UserAuth"
+acpx claude exec "create a PR on repo X, branch feat/Y targeting develop"
+acpx claude exec "read the failing test output and summarize the issue"
+
+# With JSON output for logging:
+acpx --format json claude exec "summarize open TODO items"
+
+# Session-based (multi-turn, for complex tasks):
+acpx claude -s backend "implement token pagination"
+acpx claude -s backend "now add a regression test"
+```
+
+### Approval Gate
+
+Before dispatching any destructive operation, Bernard MUST get explicit approval from Alex via Telegram.
+
+**Auto-dispatch (no approval needed):**
+- Read, search, analyse code
+- Create branches
+- Create PRs (returns URL for review)
+- Run tests
+- Generate diffs or summaries
+
+**Requires Alex's approval:**
+- Push to any branch
+- Merge PRs
+- Deploy to any environment
+- Delete files, branches, or resources
+- Modify infrastructure or CI/CD config
+- Any operation that changes production state
+
+**Approval flow:**
+1. Bernard sends: "CC wants to: [action]. Repo: [repo]. Approve? (yes/no)"
+2. Wait up to 10 minutes for Alex's response
+3. If approved: dispatch and return result
+4. If denied or timeout: abort and confirm to Alex
+5. Log all approval requests and outcomes
+
+### Logging
+
+All CC dispatches are logged via `tools/cc-dispatch.sh` wrapper:
+- Timestamped JSONL at `~/.openclaw/logs/cc-dispatch.jsonl`
+- Fields: timestamp, task, source (telegram msg), result, duration, approval (if applicable)
+
+### Constraints
+
+- Never dispatch without understanding the task context
+- Never chain destructive operations without per-operation approval
+- If CC returns an error, summarize it for Alex — don't retry blindly
+- Cost awareness: flag if a dispatch will be expensive (large repo scan, complex multi-file refactor)
+
+---
+
 ## Permissions
 
 - Shell access: YES — for legitimate tasks within workspace
@@ -57,8 +118,9 @@ Rules:
 - File write: YES — within workspace and vault
 - Web search: YES — via Brave API
 - Web fetch: YES
+- CC dispatch: YES — via acpx, subject to approval gate above
 - AWS CLI: NO
-- Deploy or push to any repo: NO
+- Deploy or push to any repo: NO (without approval gate)
 - Modify own SG, VPC, or IAM config: NO
 
 ---
