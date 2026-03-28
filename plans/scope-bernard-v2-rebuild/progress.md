@@ -4,10 +4,10 @@
 <!-- Updated after every significant action. Paste the first 20 lines of this file
      into a new conversation to get oriented. -->
 **Scope:** plans/scope-bernard-v2-rebuild/scope.md
-**Last action:** Phase 4 complete (2026-03-28) — digest template, 5 skills, tracking infrastructure deployed
-**Next action:** Execute Phase 5 plan (Ingestion Pipeline)
-**Open blockers:** None
-**Key files changed:** 13 files: DIGEST.md, 5 skill files, 6 tracking templates, digest-log.md
+**Last action:** Phase 5 complete (2026-03-28) — ingestion pipeline, PII stripping, auto-learn deployed
+**Next action:** Execute Phase 6 plan (CC Dispatch) — or pause here for 2-week eval
+**Open blockers:** Phase 6 requires CC installed on VM
+**Key files changed:** ingest.py, pii_strip.py, test_ingest.py, USER.md (criteria), auto-learn.md
 
 ---
 
@@ -46,6 +46,7 @@
 | 2026-03-28 | Phase 2 | Done | Identity: SOUL v2, IDENTITY.md, FEEDBACK.md, AGENTS.md, MEMORY.md, security spine |
 | 2026-03-28 | Phase 3 | Done | Vault: 4 project files, templates (people/ideas), principles, priorities, comms structure, CURATION.md, QMD v2.0.1 installed + indexing 12 files, gateway restarted with QMD memory backend |
 | 2026-03-28 | Phase 4 | Done | Digest: DIGEST.md (4-section daily digest), 5 skills (dropped balls, board topics, staff check-ins, pricing, house projects), tracking/ dir with templates, QMD now indexing 23 files |
+| 2026-03-28 | Phase 5 | Done | Ingestion: ingest.py (email/WA/Chatwoot), pii_strip.py (regex+LLM), 26 tests passing, auto-learn skill, USER.md criteria filled. Pipeline works on server. QMD indexing 24 files. |
 
 ---
 
@@ -70,7 +71,7 @@
 | bernard-v2-phase-2-PLAN.md | 2 — Identity & Learning Loop | Done | SOUL v2, FEEDBACK.md, AGENTS.md, security spine |
 | bernard-v2-phase-3-PLAN.md | 3 — Vault & QMD | Done | Vault populated, QMD v2.0.1 installed, 12 files indexed, curation loop |
 | bernard-v2-phase-4-PLAN.md | 4 — Digest & Phase 2 Skills | Done | DIGEST.md, 5 skills, 6 tracking templates, digest-log.md |
-| bernard-v2-phase-5-PLAN.md | 5 — Ingestion Pipeline | Ready to execute | Email/WA pipeline, PII strip, afterTurn hook |
+| bernard-v2-phase-5-PLAN.md | 5 — Ingestion Pipeline | Done | ingest.py, pii_strip.py, 26 tests, auto-learn.md, USER.md criteria |
 | bernard-v2-phase-6-PLAN.md | 6 — CC Dispatch | Ready to execute | CC install, ACP bridge, approval gate |
 | bernard-v2-phase-7-PLAN.md | 7 — Padma Care Community | Ready to execute | Voice docs, monitoring, response templates, SEO |
 
