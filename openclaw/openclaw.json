@@ -39,14 +39,9 @@
           "alias": "DeepSeek v3"
         }
       },
-      "fallback": [
-        "openrouter/anthropic/claude-sonnet-4",
-        "openrouter/deepseek/deepseek-chat-v3-0324"
-      ],
       "workspace": "/home/bernard/.openclaw/workspace",
       "compaction": {
-        "mode": "safeguard",
-        "flushPrompt": "Distill this session. Keep: decisions made, tasks completed, blockers, open items. Skip: routine exchanges."
+        "mode": "safeguard"
       },
       "maxConcurrent": 4,
       "subagents": {
@@ -54,7 +49,6 @@
         "model": "openrouter/anthropic/claude-haiku-4"
       },
       "heartbeat": {
-        "interval": "3h",
         "model": "openrouter/anthropic/claude-haiku-4"
       }
     }
