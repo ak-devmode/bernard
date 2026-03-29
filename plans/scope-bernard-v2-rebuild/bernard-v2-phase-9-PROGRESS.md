@@ -21,3 +21,13 @@
   - Skip files under 1KB
   - Skip ~/Documents/
 - **Issues**: None
+
+### Task 9.1 (partial): Deep PMG Inventory
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Deep-scanned all 21 PMG subfolders (~41,500 files). Cataloged every subfolder by strategic relevance. Individual file listings for high-value folders (Vector Meeting, Board Prep, Managed Care, IT_Infra, Kalpa Health, Operating Plans). Bulk entries for operational folders. Classified files as DETAILED POINTER / MINIMAL POINTER / FINANCIAL INDEX / LEGAL INDEX / SENSITIVE / SKIP.
+- **Files modified**:
+  - `openclaw/workspace/reference/index/inventory-pmg-deep.md` (created — 716 lines)
+- **Issues**: None
+- **Remaining for Task 9.1**: Fin Engine, AWK, North Atlantic, Stone Foundation, Shelved Startups (Sessions 2-3)
