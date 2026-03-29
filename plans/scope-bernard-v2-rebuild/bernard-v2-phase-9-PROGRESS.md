@@ -63,3 +63,18 @@
   - `openclaw/workspace/reference/projects/bernard/archive/` — 5 new files
   - `openclaw/workspace/reference/projects/pmg/Kezia_WorkPlan_v2_2.md` + 3 from Downloads
 - **Issues**: None
+
+### Task 9.2: Relevance Scoring Pass
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Scored all DETAILED POINTER files from three inventories using 4-dimension system (decision-relevant, relationships, reusable insight, reference data). Identified 11 binary files scoring 9+ that warrant extraction. Established batch scoring rules for bulk categories (financial/legal → minimal pointer, marketing/CAD → skip, defunct ventures → minimal pointer bulk). Created action plan for Alex's review.
+- **Files modified**:
+  - `openclaw/workspace/reference/index/relevance-scoring.md` (created — 205 lines)
+- **Issues**: None
+
+### Task 9.3: Alex Reviews Scored Inventory
+- **Status**: ✅ DONE (Alex approved priorities and scoring)
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **Alex's decision**: Approved scoring as-is. Proceed with extraction and domain index creation.
