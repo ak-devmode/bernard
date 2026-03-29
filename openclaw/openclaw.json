@@ -132,6 +132,14 @@
     "qmd": {
       "includeDefaultMemory": true,
       "searchMode": "search",
+      "paths": [
+        { "name": "knowledge", "path": "knowledge", "pattern": "**/*.md" },
+        { "name": "plans", "path": "../../plans", "pattern": "**/*.md" },
+        { "name": "skills", "path": "knowledge/skills", "pattern": "**/*.md" },
+        { "name": "tracking", "path": "knowledge/tracking", "pattern": "**/*.md" },
+        { "name": "padma-care", "path": "knowledge/padma-care", "pattern": "**/*.md" },
+        { "name": "identity", "path": ".", "pattern": "*.md" }
+      ],
       "update": {
         "interval": "5m",
         "debounceMs": 15000,
