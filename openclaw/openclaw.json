@@ -143,7 +143,8 @@
       "update": {
         "interval": "15m",
         "debounceMs": 30000,
-        "onBoot": false
+        "onBoot": false,
+        "embedInterval": "6h"
       },
       "limits": {
         "maxResults": 6,
