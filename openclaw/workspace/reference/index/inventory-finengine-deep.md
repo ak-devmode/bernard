@@ -338,7 +338,7 @@ FEI corporate registration and identity documents.
 | Date | Size | Type | File | Classification |
 |---|---|---|---|---|
 | 2026-03-02 | 456K | .pdf | NPWPD Narawangsa Villas.pdf | LEGAL INDEX |
-| 2026-02-13 | 474K | .pdf | Brant Connors Passport BHC Exp 2035.pdf | SENSITIVE |
+| 2026-02-13 | 474K | .pdf | [REDACTED] Passport scan | SENSITIVE |
 | 2025-07-16 | 1M | .pdf | NPWP FEI.pdf | LEGAL INDEX |
 | 2024-10-01 | 456K | .pdf | New Sertifikat Standar PT FEI.pdf | LEGAL INDEX |
 | 2024-10-01 | 527K | .pdf | New NIB PT FEI.pdf | LEGAL INDEX |

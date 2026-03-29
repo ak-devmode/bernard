@@ -15,7 +15,7 @@ exist and where they are, but NEVER read or summarize financial/legal content.
 
 ### PT Fin Engine Indonesia (FEI)
 - **Path**: Dropbox/Fin Engine/PT Fin Engine Indonesia/5. Organization Documents/
-- **Docs**: Founding Akte, AHU, NPWP (0533947891905000), NIB, Izin Lokasi, NPWPD Narawangsa
+- **Docs**: Founding Akte, AHU, NPWP, NIB, Izin Lokasi, NPWPD Narawangsa
 - **When to surface**: Indonesian regulatory compliance, business license renewals
 
 ### Fin Engine Holdings LLC (FEH)
