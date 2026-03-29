@@ -136,7 +136,7 @@ async sendOutboundMessage(conversationId, content, messageType = 'outgoing') {
 ```bash
 # Via Chatwoot API
 curl -X GET "https://app.chatwoot.com/api/v1/accounts/152163/inboxes" \
-  -H "api_access_token: A2dv8X1JMFfUt3buPyWFfD3x"
+  -H "api_access_token: <REDACTED — see AWS Secrets Manager>"
 ```
 
 Or check Chatwoot UI: Settings → Inboxes → Click inbox → Check URL for ID
