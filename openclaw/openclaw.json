@@ -141,9 +141,9 @@
         { "name": "identity", "path": ".", "pattern": "*.md" }
       ],
       "update": {
-        "interval": "5m",
-        "debounceMs": 15000,
-        "onBoot": true
+        "interval": "15m",
+        "debounceMs": 30000,
+        "onBoot": false
       },
       "limits": {
         "maxResults": 6,
