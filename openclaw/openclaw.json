@@ -134,6 +134,7 @@
       "searchMode": "search",
       "paths": [
         { "name": "knowledge", "path": "knowledge", "pattern": "**/*.md" },
+        { "name": "reference", "path": "reference", "pattern": "**/*.md" },
         { "name": "plans", "path": "/home/bernard/bernard/plans", "pattern": "**/*.md" },
         { "name": "skills", "path": "knowledge/skills", "pattern": "**/*.md" },
         { "name": "tracking", "path": "knowledge/tracking", "pattern": "**/*.md" },
@@ -147,7 +148,7 @@
         "embedInterval": "6h"
       },
       "limits": {
-        "maxResults": 6,
+        "maxResults": 8,
         "maxSnippetChars": 700,
         "timeoutMs": 4000
       }
