@@ -53,3 +53,43 @@
   - Non-.md files (docx, xlsx, pdf) deferred to Phase 9
   - reference/ becomes the long-term landing zone for all ingested content
 - **Issues**: None
+
+### Task 8.5: Copy Active Files to reference/
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Copied 82 .md files from ~/Projects/, ~/Desktop/, ~/Downloads/files(1)/, and ~/Dropbox/ into reference/. Organized by project: Kalpa (22), PMG (28 + 5 Vector Meeting), Padma Care (14), Narawangsa (3), Principles (4).
+- **Files modified**: 82 files under openclaw/workspace/reference/
+- **Issues**: None
+
+### Task 8.6: Generate Extracts for Archive Material
+- **Status**: ⏭️ SKIPPED
+- **Notes**: Deferred to Phase 9 per Alex direction. Extract work applies to non-.md files (docx, xlsx, pdf) which are the Phase 9 research project scope.
+
+### Task 8.7: Generate Index Pointers
+- **Status**: ⏭️ SKIPPED
+- **Notes**: Deferred to Phase 9 per Alex direction. Index pointers for financial/legal/binary Dropbox files are Phase 9 scope.
+
+### Task 8.8: Configure QMD for Two-Tier Search
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Added reference/ as QMD path in openclaw.json. Bumped maxResults from 6 to 8.
+- **Files modified**: openclaw/openclaw.json
+- **Issues**: None
+
+### Task 8.9: Validate Vault Quality
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: PII scan across all reference/ files. Only public business contacts found (pbmcgroup.com emails, Padma Care official WhatsApp numbers). No personal PII, financial content, or legal content. 123 total vault files (32 Tier 1, 91 Tier 2).
+- **Files modified**: None
+- **Issues**: None
+
+### Task 8.10: Deploy Bootstrap to Server
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Pushed to GitHub, pulled on server. Verified 123 files on server (32 knowledge/ + 91 reference/). Restarted gateway for QMD re-indexing. Health check passed.
+- **Files modified**: None (server-side git pull + gateway restart)
+- **Issues**: None

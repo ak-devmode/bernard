@@ -5,11 +5,11 @@
      into a new conversation to get oriented. -->
 **Scope:** plans/scope-bernard-v2-rebuild/scope.md
 **Branch:** bernard-v2
-**Last action:** Phase 7 complete (2026-03-28) — Padma Care community engine deployed, 8 knowledge files on server
-**Next action:** Execute Phase 8 plan — `plans/scope-bernard-v2-rebuild/bernard-v2-phase-8-PLAN.md` (Knowledge Bootstrap)
+**Last action:** Phase 8 complete (2026-03-29) — Knowledge bootstrap: 82 .md files copied to reference/, QMD indexing 123 files
+**Next action:** Execute Phase 9 plan — `plans/scope-bernard-v2-rebuild/bernard-v2-phase-9-PLAN.md` (Archive Index & Curation)
 **Open blockers:** None
-**Server:** 54.251.203.204, gateway healthy, QMD indexing 32+ files, CC dispatch working
-**What's live:** Identity, vault (projects/people/ideas/comms), digest template, 5 skills, ingestion pipeline, PII stripping, CC dispatch via acpx, JSONL logging, Padma Care knowledge base (voice, free/paid line, platforms, monitoring, response drafting, pipeline tracker, content queue, SEO checklist)
+**Server:** 54.251.203.204, gateway healthy, QMD indexing 123 files (32 knowledge/ + 91 reference/), CC dispatch working
+**What's live:** Identity, vault (projects/people/ideas/comms), digest template, 5 skills, ingestion pipeline, PII stripping, CC dispatch via acpx, JSONL logging, Padma Care knowledge base, reference/ Tier 2 (Kalpa ADRs/plans, PMG PRDs/architecture, Padma Care briefs/marketing/onboarding, Vector Meeting strategy, Narawangsa marketing, working preferences)
 **Human TODOs:** `plans/scope-bernard-v2-rebuild/TODO-alex.md` (priorities, people files, board dates, etc.)
 **Someday list:** `plans/scope-bernard-v2-rebuild/TOMORROW.md`
 
@@ -57,6 +57,7 @@
 | 2026-03-28 | Phase 5 | Done | Ingestion: ingest.py (email/WA/Chatwoot), pii_strip.py (regex+LLM), 26 tests passing, auto-learn skill, USER.md criteria filled. Pipeline works on server. QMD indexing 24 files. |
 | 2026-03-28 | Phase 6 | Done | CC Dispatch: Claude Code 2.1.86 + acpx 0.3.1 installed. System node upgraded to v24. AGENTS.md dispatch rules with approval gate. cc-dispatch.sh logging wrapper. JSONL logging active. E2E dispatch tested. |
 | 2026-03-28 | Phase 7 | Done | Padma Care Community Engine: 8 knowledge files (voice, free/paid line, platforms, monitoring template, response drafting, pipeline tracker, content queue, SEO checklist). Deployed to server. Alex feedback: Retire in Bali FB group added, WA groups = highest signal, WA monitoring architecture problem captured as TODO. |
+| 2026-03-29 | Phase 8 | Done | Knowledge Bootstrap: scanned ~/Projects/ (156 files), ~/Desktop/, ~/Downloads/, ~/Dropbox/ (32K+ files). 82 .md files copied to reference/. Tier 2 dir structure created. QMD config updated (reference/ path, maxResults=8). 123 total vault files. Tasks 8.6/8.7 deferred to Phase 9 (non-.md corpus). Dropbox at ~/Library/CloudStorage/Dropbox. |
 
 ---
 
@@ -84,6 +85,9 @@
 | bernard-v2-phase-5-PLAN.md | 5 — Ingestion Pipeline | Done | ingest.py, pii_strip.py, 26 tests, auto-learn.md, USER.md criteria |
 | bernard-v2-phase-6-PLAN.md | 6 — CC Dispatch | Done | CC 2.1.86, acpx 0.3.1, dispatch working, JSONL logging, approval gate in AGENTS.md |
 | bernard-v2-phase-7-PLAN.md | 7 — Padma Care Community | Done | 8 knowledge files deployed: voice, free/paid, platforms, monitoring, drafting, pipeline, content queue, SEO |
+| bernard-v2-phase-8-PLAN.md | 8 — Knowledge Bootstrap | Done | 82 .md files copied to reference/, QMD indexing 123 files, Tier 2 directory structure, Tasks 8.6/8.7 deferred to Phase 9 |
+| bernard-v2-phase-9-PLAN.md | 9 — Archive Index & Curation | Pending | Non-.md research project (docx, xlsx, pdf from Dropbox) |
+| bernard-v2-phase-10-PLAN.md | 10 — Stream Watchers | Pending | WA follow-ups, lead capture, todo capture |
 
 ---
 
