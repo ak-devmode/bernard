@@ -102,3 +102,20 @@
 - **Files modified**:
   - `tools/test_stream_watcher.py` (created — 18 tests)
 - **Issues**: None
+
+### Task 10.9: Deploy Stream Watchers to Server
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Pushed to GitHub, pulled on server (stash/pop to handle Bernard's local AGENTS.md edit). 19 files updated. Verified: registry readable, output dirs exist, dry-run works, 18/18 integration tests pass on server.
+- **Deployment**: `git pull origin bernard-v2` on 54.251.203.204 — successful (auto-merge with Bernard's ToDo section)
+- **Issues**: None
+
+### Phase 10 COMPLETE
+- **All tasks**: 10.1 ✅, 10.2 ✅, 10.3 ✅, 10.4 ✅, 10.5 ✅, 10.6 ✅, 10.7 ✅, 10.8 ✅, 10.9 ✅
+- **Test suite**: 49 tests across 4 files, all passing (local + server)
+- **Files created**: 13 new files (watchers, tests, framework, registry, READMEs)
+- **Files updated**: 4 (AGENTS.md, HEARTBEAT.md, DIGEST.md, ingest.py)
+- **Bilingual**: All 3 watchers support EN + Bahasa Indonesia patterns
+- **Deployed**: Live on Bernard's EC2 instance
+- **Remaining**: Alex needs to populate `priorities/current.md` for todo alignment scoring to be useful. Manual follow-up tracking is live — tell Bernard about a request to test.
