@@ -18,6 +18,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 import urllib.request
 from dataclasses import dataclass
@@ -389,6 +390,10 @@ def main():
         "--vault-root", default=None,
         help="Override vault root path"
     )
+    parser.add_argument(
+        "--no-watchers", action="store_true",
+        help="Skip stream watcher processing after ingestion"
+    )
     args = parser.parse_args()
 
     vault_root = Path(args.vault_root) if args.vault_root else VAULT_ROOT
@@ -421,6 +426,34 @@ def main():
 
     if result.output_path:
         print(f"Written to: {result.output_path}", file=sys.stderr)
+
+    # Run stream watchers on the summary (unless suppressed or dry-run or duplicate)
+    if not args.no_watchers and not args.dry_run and not result.was_duplicate:
+        _run_stream_watchers(result.markdown, args.source)
+
+
+def _run_stream_watchers(summary: str, source: str) -> None:
+    """Pipe the ingested summary through stream-watcher.py as a subprocess."""
+    watcher_script = Path(__file__).parent / "stream-watcher.py"
+    if not watcher_script.exists():
+        return
+
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(watcher_script), "--source", source],
+            input=summary,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        if proc.stdout.strip():
+            print(f"\n[stream-watchers]\n{proc.stdout}", file=sys.stderr)
+        if proc.returncode != 0 and proc.stderr.strip():
+            print(f"[stream-watchers stderr] {proc.stderr.strip()}", file=sys.stderr)
+    except subprocess.TimeoutExpired:
+        print("[stream-watchers] timed out after 30s", file=sys.stderr)
+    except Exception as e:
+        print(f"[stream-watchers] error: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
