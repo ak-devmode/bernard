@@ -16,6 +16,22 @@ The digest has four numbered sections. Alex can reply "expand 2" or "skip 4" to 
 
 4. **Whimsy.** One item from `knowledge/ideas/` or a serendipitous connection Bernard noticed. Keep it light — this is the dessert, not the meal. If nothing fits, skip silently.
 
+5. **Waiting On.** Follow-ups from `knowledge/followups/` where status = waiting, ordered by days since sent. Format: "{contact}: {topic} — sent {N} days ago {⚠️ if past expected_by}". If no follow-ups are waiting, skip silently.
+
+6. **New Leads.** Leads from `knowledge/padma-care/leads/` where status = new, ordered by urgency. Format: "{name}: {inquiry} — {product_fit} — follow up by {date}. HubSpot draft ready: yes/no." If no new leads, skip silently.
+
+7. **Incoming Asks.** Todos from `knowledge/todos/` where status = proposed, grouped by alignment:
+   - **Aligned with current focus**: {ask} from {who} — {which priority}
+   - **Important but not today**: {ask} from {who} — suggested: {date}
+   - **Low priority / decline candidates**: {ask} from {who}
+   If no proposed todos, skip silently.
+
+8. **Stale Items (weekly — Monday only).** Scan for rot across all watcher outputs:
+   - Follow-ups sitting 14+ days with no action — close or escalate?
+   - Proposed todos sitting 7+ days unreviewed — still relevant?
+   - Leads with hubspot: pending for 7+ days — enter or discard?
+   If nothing is stale, skip silently.
+
 ---
 
 ## Format Rules
