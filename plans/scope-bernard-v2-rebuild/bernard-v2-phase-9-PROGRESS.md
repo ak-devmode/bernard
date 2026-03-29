@@ -31,3 +31,35 @@
   - `openclaw/workspace/reference/index/inventory-pmg-deep.md` (created — 716 lines)
 - **Issues**: None
 - **Remaining for Task 9.1**: Fin Engine, AWK, North Atlantic, Stone Foundation, Shelved Startups (Sessions 2-3)
+
+### Task 9.1 (continued): Deep Fin Engine Inventory
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Deep-scanned both Fin Engine entities — PT Fin Engine Indonesia (5,266 files) and Fin Engine Holdings LLC (131 files). Cataloged Narawangsa Villas ops (Marketing&Distribution 1,807, Operations 157, Accounting 161, Guest Services 74, HR 84), Construction (Pre-work 1,169, Shop Drawings 605, Interiors 360, Construction Finances 131, Subcontractors 126, Finishes 58, Land 53, others), PBMC Investment (121), corporate docs, consulting invoices, FEH formation docs, construction loans, and financials. Classified every subfolder.
+- **Files modified**:
+  - `openclaw/workspace/reference/index/inventory-finengine-deep.md` (created — 486 lines)
+- **Issues**: None
+- **Remaining for Task 9.1**: AWK personal, North Atlantic, Stone Foundation, Shelved Startups (Session 3)
+
+### Task 9.1 (continued): AWK, North Atlantic, Stone Foundation Inventory
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Deep-scanned AWK personal (18,189 files), North Atlantic (29,612 files), Stone Foundation (753 files). AWK: indexed Shelved Startups (Anchor Energy ~7,700 biomass energy files, AWK Wealth 266), BSV angel fund (129), Insurance (40); skipped IMD MBA (6,162), taxes (403), job searches (298), personal. North Atlantic: full defunct seafood biz archive indexed as bulk pointer — covers BSI operations, NAI Group holding, SG Data Room, marketing, Ramco ERP. Stone Foundation: historical nonprofit board work indexed — committees, board meetings, grants.
+- **Files modified**:
+  - `openclaw/workspace/reference/index/inventory-awk-skipped-deep.md` (created — 247 lines)
+- **Issues**: None
+- **Task 9.1 COMPLETE**: All Dropbox trees inventoried. Total: ~95,500 files across PMG (~41,500), Fin Engine (~5,400), AWK (~18,200), North Atlantic (~29,600), Stone Foundation (~750). Three inventory files created (1,449 lines total).
+
+### Deferred .md Extract Copies (Phase 8 follow-up)
+- **Status**: ✅ DONE
+- **Started**: 2026-03-29
+- **Completed**: 2026-03-29
+- **What was done**: Copied 59 .md files deferred from Phase 8 into reference/ — wholesale, no summarization per Alex's direction. Sources: Kalpa (24 files — architecture, plans, meetings, archive), PMG (26 files — chatwoot docs, PRDs, plans, archive), Bernard (5 archive files), Downloads (4 files). reference/ now has 142 .md files (up from 83).
+- **Files modified**:
+  - `openclaw/workspace/reference/projects/kalpa/` — 24 new files across archive/, plans/, meetings/
+  - `openclaw/workspace/reference/projects/pmg/` — 26 new files across chatwoot/, plans/, archive/
+  - `openclaw/workspace/reference/projects/bernard/archive/` — 5 new files
+  - `openclaw/workspace/reference/projects/pmg/Kezia_WorkPlan_v2_2.md` + 3 from Downloads
+- **Issues**: None
