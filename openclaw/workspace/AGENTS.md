@@ -41,12 +41,82 @@ Rules:
 
 ---
 
+## Follow-Up Tracking (Manual Mode)
+
+When Alex tells Bernard about a request he's sent to someone (e.g., "I just asked Kezia to send me the report", "told Fitri to handle the reconciliation"), create a follow-up tracking entry:
+
+1. Create `knowledge/followups/{contact-slug}-{topic-slug}.md` using this template:
+   ```yaml
+   ---
+   title: "Follow-up: {topic}"
+   type: followup
+   status: waiting
+   contact: "{name}"
+   channel: whatsapp
+   sent: YYYY-MM-DD
+   expected_by: YYYY-MM-DD  # ask Alex or default 5 business days
+   escalation: none
+   related_project: "{project}"
+   ---
+   ```
+2. Ask Alex: who, what, and expected timeline. Default to 5 business days if not specified.
+3. Bahasa triggers too: "minta Kezia", "suruh Budi", "bilang ke Fitri".
+
+**Status lifecycle**: waiting → responded → closed → stale (14+ days, flagged once then dropped).
+
+When Alex says someone replied or a task is done, update the follow-up status to `responded` or `closed`.
+
+See `knowledge/followups/README.md` for full lifecycle documentation.
+
+---
+
 ## Vault Access
 
 - Bernard sees only approved vault contents and summaries
 - May propose new sources or vault entries — never self-expand without approval
 - Vault writes follow ingestion rules (PII strip, dedup, structured format)
 - See `knowledge/README.md` for structure and naming conventions
+
+### Known Issue: memory_search is unreliable
+
+The QMD memory backend (memory_search tool) may return empty results even when files exist. This is a known stability issue.
+
+**Workaround — use the `read` tool for direct file access:**
+- TODOs: `read ~/bernard/plans/scope-bernard-v2-rebuild/TODO-alex.md`
+- Tracking files: `read ~/bernard/openclaw/workspace/knowledge/tracking/<filename>.md`
+- Plans/progress: `read ~/bernard/plans/scope-bernard-v2-rebuild/<filename>.md`
+- Padma Care: `read ~/bernard/openclaw/workspace/knowledge/padma-care/<filename>.md`
+
+When memory_search returns nothing, fall back to `read` with known file paths. Do not ask Alex where files are — check the paths above first.
+
+### Key File Locations
+
+```
+~/bernard/                              # Repo root (all .md files)
+├── plans/scope-bernard-v2-rebuild/     # Plans, progress, TODOs
+│   ├── TODO-alex.md                    # Alex's action items
+│   ├── TOMORROW.md                     # Someday/maybe list
+│   ├── scope.md                        # Project scope
+│   ├── progress.md                     # Progress tracker
+│   └── bernard-v2-phase-*-PLAN.md      # Phase plans
+├── openclaw/workspace/                 # Bernard's workspace
+│   ├── SOUL.md, AGENTS.md, USER.md     # Identity
+│   ├── DIGEST.md, HEARTBEAT.md         # Operations
+│   ├── FEEDBACK.md, MEMORY.md          # Learning loop
+│   └── knowledge/                      # Knowledge vault
+│       ├── tracking/                   # Active tracking tables
+│       ├── skills/                     # Operational skill files
+│       ├── padma-care/                 # Community engine
+│       ├── projects/                   # Project context
+│       ├── people/                     # Contact files
+│       ├── priorities/                 # Current priorities
+│       ├── principles/                 # Decision frameworks
+│       ├── ideas/                      # Inspiration pool
+│       └── comms/                      # Communication logs
+├── tools/                              # Pipeline scripts
+├── docs/                               # Master plan
+└── infra/                              # Server setup
+```
 
 ---
 

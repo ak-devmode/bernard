@@ -8,6 +8,13 @@ On each scheduled check:
 5. If nothing urgent: respond with "All clear [time]" — no noise
 6. Only message Alex proactively if something genuinely needs attention
 
+## Stream Watcher Checks
+On each heartbeat, also scan watcher outputs:
+- `knowledge/followups/`: flag entries approaching or past `expected_by` date. Include overdue items in the next digest with a gentle flag.
+- `knowledge/todos/`: flag proposed items sitting 7+ days unreviewed.
+- `knowledge/padma-care/leads/`: flag leads with `hubspot: pending` for 7+ days.
+If nothing is overdue or stale, don't mention watchers.
+
 ## Signal vs. Noise
 - Urgent = something that will cost Alex time, money, or a relationship if not addressed today
 - Not urgent = everything else
