@@ -58,7 +58,15 @@ slop) and approval for overnight agents are the next layer, not built yet.
 3.4 Parsing is imported from `~/Projects/ai-skills/scripts/todo-stats.py`, the same parser
 the session-start counter uses.
 
-## 4. Databases
+## 4. Backups
+
+`homelab-db/restore-test.sh` loads the newest dump into a throwaway container and compares
+row counts with the live cluster — run it after any schema change. pg_dump's "circular
+foreign-key constraints … continuous_agg" warning is Timescale's own catalog and is
+expected; the restore test is what proves it harmless. Backups sit on the same disk as
+the volume: they cover bad migrations and deletes, not disk loss.
+
+## 5. Databases
 
 - `todo_pulse` — this.
 - `home` — IoT (water, power, leak). Timescale extension already enabled; schema not yet built.

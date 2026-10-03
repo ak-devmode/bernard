@@ -77,6 +77,15 @@ SELECT w::date AS week, sum((SELECT open FROM snapshot sn WHERE sn.source = s.la
 FROM generate_series(DATE '{end}' - 49, DATE '{end}', interval '7 days') w,
      source s GROUP BY 1 ORDER BY 1;""")
 
+    # Headline slope: regression over the DAILY carried-forward total, not a sum of
+    # per-source slopes — a source with four snapshots would otherwise dominate it.
+    total_slope = rows(f"""
+SELECT round((regr_slope(t.open, t.d - DATE '2000-01-01') * 7)::numeric, 1) AS slope
+FROM (SELECT d::date AS d, sum((SELECT open FROM snapshot sn WHERE sn.source = s.label
+        AND sn.taken_on <= d ORDER BY taken_on DESC LIMIT 1)) AS open
+      FROM generate_series(DATE '{end}' - 27, DATE '{end}', interval '1 day') d,
+           source s GROUP BY 1) t;""")[0]["slope"]
+
     def n(v):
         return int(v) if v not in (None, "") else None
 
@@ -87,7 +96,7 @@ FROM generate_series(DATE '{end}' - 49, DATE '{end}', interval '7 days') w,
     total = sum(n(r["now"]) for r in per_source)
     added = sum(n(r["added"]) for r in per_source)
     removed = sum(n(r["removed"]) for r in per_source)
-    slope = sum(float(r["slope"] or 0) for r in per_source)
+    slope = float(total_slope or 0)
 
     lines = [
         f"{total} open TO-DOs across {len(per_source)} sources. This week "
