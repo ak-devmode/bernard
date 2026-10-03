@@ -1,6 +1,12 @@
 # Bernard
 
-Bernard is Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC2 instance (Ubuntu, 54.254.76.94).
+> **Status (2026-10-03):** the OpenClaw agent is retired and the EC2 instance is stopped.
+> Everything below §"What this repo is" through "Known gotchas" is historical — kept for a
+> possible resurrection (possibly as a Hermes agent), not live. The live part of this repo
+> is `lifehacks/`: personal cron jobs and the homelab Postgres on Alex's local Linux box.
+> See `lifehacks/README.md`.
+
+Bernard was Alex Knecht's AI personal assistant, running on OpenClaw on an AWS EC2 instance (Ubuntu, 54.254.76.94).
 
 ## What this repo is
 - **Config & identity layer** for Bernard's OpenClaw instance — not a fork of OpenClaw itself

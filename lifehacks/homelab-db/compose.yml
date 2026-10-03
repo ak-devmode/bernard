@@ -1,0 +1,32 @@
+# Homelab Postgres — the durable, always-on database for personal projects.
+#
+# Approach: one cluster, one database per domain (todo_pulse, home, ...). TimescaleDB
+# image because the main tenant-to-be is IoT time-series (water, power, leak sensors).
+# Bound to loopback only; anything off-box goes through an ingest service, not a
+# direct DB port. Kept separate from the disposable WellMed test env on purpose —
+# that one lives in the WellMed repos on a different port and gets torn down freely.
+#
+# PG18 images keep PGDATA under /var/lib/postgresql/<major>/, so the volume mounts the
+# parent dir rather than the pre-18 /var/lib/postgresql/data.
+
+name: homelab-db
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg18
+    container_name: homelab-db
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d postgres"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

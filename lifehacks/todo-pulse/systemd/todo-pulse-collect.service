@@ -1,0 +1,7 @@
+[Unit]
+Description=todo-pulse daily TO-DO.md snapshot
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/Projects/bernard/lifehacks/todo-pulse/collect.py

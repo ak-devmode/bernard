@@ -35,3 +35,6 @@ Thumbs.db
 # Obsidian (keep vault content, ignore workspace settings)
 vault/.obsidian/workspace.json
 vault/.obsidian/workspace-mobile.json
+
+# Lifehacks secrets and caches
+lifehacks/homelab-db/.env
