@@ -1,0 +1,10 @@
+[Unit]
+Description=todo-pulse weekly email
+After=todo-pulse-collect.service
+
+[Service]
+Type=oneshot
+# Grafana SES lives in the kalpa account, ap-southeast-1 (see lifehacks/README.md §2)
+Environment=AWS_PROFILE=kalpa
+ExecStartPre=/usr/bin/python3 %h/Projects/bernard/lifehacks/todo-pulse/collect.py
+ExecStart=/usr/bin/python3 %h/Projects/bernard/lifehacks/todo-pulse/report.py --send

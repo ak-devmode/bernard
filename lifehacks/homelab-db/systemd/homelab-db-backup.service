@@ -1,0 +1,6 @@
+[Unit]
+Description=Homelab Postgres nightly pg_dumpall
+
+[Service]
+Type=oneshot
+ExecStart=%h/Projects/bernard/lifehacks/homelab-db/backup.sh
